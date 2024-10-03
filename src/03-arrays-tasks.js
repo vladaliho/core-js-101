@@ -449,15 +449,15 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]
  */
 function getIdentityMatrix(n) {
-  if (!Number.isInteger(n) || n < 0) {
-    throw new Error('Input must be a non-negative integer');
+  const result = new Array(n);
+  for (let i = 0; i < n; i += 1) {
+    result[i] = new Array(n);
+    for (let j = 0; j < n; j += 1) {
+      result[i][j] = i === j ? 1 : 0;
+    }
   }
-
-  return Array.from({ length: n }, (row, i) =>
-    Array.from({ length: n }, (col, j) => (i === j ? 1 : 0))
-  );
+  return result;
 }
-
 /**
  * Creates an array of integers from the specified start to end (inclusive)
  *
