@@ -449,14 +449,15 @@ function sortCitiesArray(arr) {
  *           [0,0,0,0,1]]
  */
 function getIdentityMatrix(n) {
-  const result = new Array(n);
-  for (let i = 0; i < n; i += 1) {
-    result[i] = new Array(n);
-    for (let j = 0; j < n; j += 1) {
-      result[i][j] = i === j ? 1 : 0;
-    }
-  }
-  return result;
+  return new Array(n).fill(0).reduce((acc, rowValue, rowIndex) => {
+    acc.push(
+      new Array(n).fill(0).reduce((rowAcc, colValue, colIndex) => {
+        rowAcc.push(rowIndex === colIndex ? 1 : 0);
+        return rowAcc;
+      }, []),
+    );
+    return acc;
+  }, []);
 }
 /**
  * Creates an array of integers from the specified start to end (inclusive)
@@ -585,14 +586,15 @@ function getElementByIndexes(arr, indexes) {
  */
 function swapHeadAndTail(arr) {
   const len = arr.length;
+  if (len === 1) {
+    return arr;
+  }
   const mid = Math.floor(len / 2);
   const head = arr.slice(0, mid);
   const tail = arr.slice(-mid);
-
   if (len % 2 === 0) {
     return [...tail, ...head];
   }
-
   return [...tail, arr[mid], ...head];
 }
 
